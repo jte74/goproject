@@ -5,8 +5,12 @@
 package db
 
 import (
+	"log"
+	"fmt"
 	"context"
 	"database/sql"
+	_ "github.com/lib/pq"
+	"training/goproject/config"
 )
 
 type DBTX interface {
@@ -18,6 +22,19 @@ type DBTX interface {
 
 func New(db DBTX) *Queries {
 	return &Queries{db: db}
+}
+
+func OpenDB() *sql.DB {
+	DBPG := "postgres"
+	pg_con_string := fmt.Sprintf("user=%s dbname=%s password=%s sslmode=disable",
+	config.C.Database.User, config.C.Database.DBName, config.C.Database.Password)
+	db, err := sql.Open(DBPG, pg_con_string)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return db
 }
 
 type Queries struct {
