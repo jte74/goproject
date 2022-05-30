@@ -2,7 +2,7 @@ package controller
 
 import (
 	"net/http"
-
+"fmt"
 	"training/goproject/domain/model"
 	"training/goproject/usecase/interactor"
 )
@@ -14,14 +14,23 @@ type userController struct {
 
 type UserController interface {
 	GetUsers(c Context) error
+	Home(c Context) error
 }
 
 func NewUserController(us interactor.UserInteractor) UserController {
 	return &userController{us}
 }
 
+// Return All Users godoc
+// @Summary Return All Users
+// @Description Return All Users
+// @Tags id
+// @Accept  json
+// @Produce  json
+// @Success 200 
+// @Router /users [get]
 func (uc *userController) GetUsers(c Context) error {
-
+	fmt.Println("Endpoint Hit: GetUsers")
 	var u []*model.User
 
 	u, err := uc.userInteractor.Get(u)
@@ -29,4 +38,8 @@ func (uc *userController) GetUsers(c Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, u)
+}
+
+func (uc *userController) Home(c Context) error {
+	return c.JSON(http.StatusOK, "Hello, World!")
 }

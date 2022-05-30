@@ -1,0 +1,28 @@
+basePath: /
+host: localhost:8081
+info:
+  contact:
+    email: julien.tellier@openwt.com
+    name: API Support
+  description: This is a sample service
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Article API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Return All Users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Return All Users
+      tags:
+      - id
+swagger: "2.0"

@@ -2,16 +2,25 @@ package main
 
 import (
 	"log"
-	"net/http"
 	"training/goproject/config"
 	"training/goproject/infrastructure/db/sqlc"
 	"training/goproject/infrastructure/router"
 	"training/goproject/registry"
-
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
+	_ "training/goproject/docs"
 )
 
+// @title Article API
+// @version 1.0
+// @description This is a sample service
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email julien.tellier@openwt.com
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+// @host localhost:8081
+// @BasePath /
 func main() {
 	config.ReadConfig()
 	conn := db.OpenDB()
@@ -20,10 +29,6 @@ func main() {
 	r := registry.NewRegistry(conn)
 	e := echo.New()
 	e = router.NewRouter(e, r.NewAppController())
-
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
 
 	if err := e.Start("localhost:8081"); err != nil {
 		log.Fatalln(err)
