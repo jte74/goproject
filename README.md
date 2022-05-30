@@ -54,6 +54,75 @@ https://medium.com/@manus.can/golang-tutorial-goroutines-and-channels-c2cd491f77
 
 https://conroy.org/introducing-sqlc
 
+**Swagger**
+
+Installation :
+$ go get -d github.com/swaggo/swag/cmd/swag
+$ go install github.com/swaggo/swag/cmd/swag@latest
+$ swag init
+$ go get -u github.com/swaggo/echo-swagger
+$ go get github.com/labstack/echo/v4
+
+Sample :
+***Main***
+import "github.com/swaggo/echo-swagger" // IMPORTANT
+import "github.com/labstack/echo/v4" // IMPORTANT v4 !!!!
+**_ "training/goproject/docs"** // IMPORTANT
+
+
+func main() {
+	e := echo.New()
+
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+
+	e.Logger.Fatal(e.Start(":1323"))
+}
+
+***Model***
+
+package model
+
+type User struct {
+	// Id
+	// in: int32
+	Id        int32       `json:"id"`
+	// Name
+	// in: string
+	Name      string     `json:"name"`
+	// Firstname
+	// in: string
+	Firstname  string    `json:"firstname"`
+	// Age
+	// in: int32
+	Age       int32     `json:"age"`
+}
+
+func (User) TableName() string { return "users" }
+
+***controller***
+// Return All Users godoc
+// @Summary Return All Users
+// @Description Return All Users
+// @Tags id
+// @Accept  json
+// @Produce  json
+// @Success 200 
+// @Router /users [get]
+func (uc *userController) GetUsers(c Context) error {
+	fmt.Println("Endpoint Hit: GetUsers")
+	var u []*model.User
+
+	u, err := uc.userInteractor.Get(u)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, u)
+}
+
+***Link***
+
+http://localhost:1323/swagger/index.html 
+
 **Clean Architecture**
 
 https://manakuro.medium.com/clean-architecture-with-go-bce409427d31
