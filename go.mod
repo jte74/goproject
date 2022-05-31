@@ -50,6 +50,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
 	github.com/gofiber/jwt/v2 v2.2.7
+	github.com/google/martian v2.1.0+incompatible
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.6 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect

@@ -22,10 +22,9 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:8081
 // @BasePath /
-// @securityDefinitions.basic BasicAuth
-// @securityDefinitions.apikey ApiKeyAuth
+// @securityDefinitions.apikey Bearer
 // @in header
-// @name X-API-Key
+// @name Authorization
 func main() {
 	config.ReadConfig()
 	conn := db.OpenDB()

@@ -55,14 +55,11 @@ const docTemplate = `{
                 }
             }
         },
-        "/users": {
+        "/restricted/users": {
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
-                    },
-                    {
-                        "BasicAuth": []
+                        "Bearer": []
                     }
                 ],
                 "description": "Return All Users",
@@ -120,13 +117,10 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "Bearer": {
             "type": "apiKey",
-            "name": "X-API-Key",
+            "name": "Authorization",
             "in": "header"
-        },
-        "BasicAuth": {
-            "type": "basic"
         }
     }
 }`

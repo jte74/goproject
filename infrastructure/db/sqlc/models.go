@@ -4,11 +4,16 @@
 
 package db
 
-import ()
+import (
+	"time"
+)
 
 type User struct {
-	Id        int32
-	Name      string
-	Firstname string
-	Age       int32
+	ID          int32
+	Name        string
+	Firstname   string
+	Age         int32
+	Password    string
+	Token       string
+	Datecreated time.Time
 }

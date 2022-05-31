@@ -71,7 +71,7 @@ paths:
       summary: login
       tags:
       - login
-  /users:
+  /restricted/users:
     get:
       consumes:
       - application/json
@@ -82,16 +82,13 @@ paths:
         "200":
           description: ""
       security:
-      - ApiKeyAuth: []
-      - BasicAuth: []
+      - Bearer: []
       summary: Return All Users
       tags:
       - id
 securityDefinitions:
-  ApiKeyAuth:
+  Bearer:
     in: header
-    name: X-API-Key
+    name: Authorization
     type: apiKey
-  BasicAuth:
-    type: basic
 swagger: "2.0"
