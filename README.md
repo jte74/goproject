@@ -63,6 +63,14 @@ $ swag init
 $ go get -u github.com/swaggo/echo-swagger
 $ go get github.com/labstack/echo/v4
 
+For add a specific parameter => 
+
+@Param <name> body <model> <required> <comment>
+e.g.
+@Param pet body Pet true "Pet to create"
+
+After each header modifications run this command => swag init (to update swagger.json/yaml)
+
 Sample :
 ***Main***
 import "github.com/swaggo/echo-swagger" // IMPORTANT
