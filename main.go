@@ -11,6 +11,7 @@ import (
 	_ "training/goproject/docs"
 )
 
+
 // @title Article API
 // @version 1.0
 // @description This is a sample service
@@ -21,6 +22,10 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:8081
 // @BasePath /
+// @securityDefinitions.basic BasicAuth
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name X-API-Key
 func main() {
 	config.ReadConfig()
 	conn := db.OpenDB()

@@ -1,4 +1,43 @@
 basePath: /
+definitions:
+  model.User:
+    properties:
+      age:
+        description: |-
+          Age
+          in: int32
+        type: integer
+      date_created:
+        description: |-
+          DateCreated
+          in: date
+        type: string
+      firstname:
+        description: |-
+          Firstname
+          in: string
+        type: string
+      id:
+        description: |-
+          Id
+          in: int32
+        type: integer
+      name:
+        description: |-
+          Name
+          in: string
+        type: string
+      password:
+        description: |-
+          Password
+          in: string
+        type: string
+      token:
+        description: |-
+          Token
+          in: string
+        type: string
+    type: object
 host: localhost:8081
 info:
   contact:
@@ -12,6 +51,26 @@ info:
   title: Article API
   version: "1.0"
 paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: login
+      parameters:
+      - description: login user
+        in: body
+        name: users
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: login
+      tags:
+      - login
   /users:
     get:
       consumes:
@@ -22,7 +81,17 @@ paths:
       responses:
         "200":
           description: ""
+      security:
+      - ApiKeyAuth: []
+      - BasicAuth: []
       summary: Return All Users
       tags:
       - id
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-API-Key
+    type: apiKey
+  BasicAuth:
+    type: basic
 swagger: "2.0"

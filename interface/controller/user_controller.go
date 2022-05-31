@@ -27,6 +27,8 @@ func NewUserController(us interactor.UserInteractor) UserController {
 // @Tags id
 // @Accept  json
 // @Produce  json
+// @Security ApiKeyAuth
+// @Security BasicAuth
 // @Success 200 
 // @Router /users [get]
 func (uc *userController) GetUsers(c Context) error {

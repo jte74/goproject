@@ -36,7 +36,7 @@ func (ur *userRepository) FindAll() ([]*model.User, error) {
 
 	contractModels := make([]*model.User, len(users))
 	for i, v := range users {
-		contractModels[i] = &model.User{Id: v.Id, Name: v.Name, Firstname: v.Name, Age: v.Age}
+		contractModels[i] = &model.User{Id: v.ID, Name: v.Name, Firstname: v.Name, Age: v.Age}
 	}
 
 	return contractModels, err
