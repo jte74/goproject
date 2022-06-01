@@ -17,7 +17,7 @@
     "host": "localhost:8081",
     "basePath": "/",
     "paths": {
-        "/login": {
+        "/auth": {
             "post": {
                 "description": "login",
                 "consumes": [

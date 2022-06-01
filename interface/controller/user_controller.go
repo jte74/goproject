@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"net/http"
 	"fmt"
+	"net/http"
 	"training/goproject/domain/model"
 	"training/goproject/usecase/interactor"
 )

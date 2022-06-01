@@ -51,7 +51,7 @@ info:
   title: Article API
   version: "1.0"
 paths:
-  /login:
+  /auth:
     post:
       consumes:
       - application/json
