@@ -139,6 +139,10 @@ With the token, we put it http request header like this : Bearer {token}
 In swagger, where is the controller that you want protected Add => // @Security Bearer  
 and in the main => // @securityDefinitions.apikey Bearer  
 After run 'swag init' command  
+
+Links for authorize and echo but ***warning to adapt !!!***
+https://shashankvivek-7.medium.com/go-swagger-user-authentication-securing-api-using-jwt-part-1-6e2a0ab8c721  
+https://shashankvivek-7.medium.com/go-swagger-user-authentication-securing-api-using-jwt-part-2-c80fdc1a020a	
 	
 **Clean Architecture**
 
