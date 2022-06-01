@@ -140,7 +140,7 @@ In swagger, where is the controller that you want protected Add => // @Security 
 and in the main => // @securityDefinitions.apikey Bearer  
 After run 'swag init' command  
 
-Links for authorize and echo but ***warning to adapt !!!***
+Links for authorize and echo but ***warning to adapt !!!***  
 https://shashankvivek-7.medium.com/go-swagger-user-authentication-securing-api-using-jwt-part-1-6e2a0ab8c721  
 https://shashankvivek-7.medium.com/go-swagger-user-authentication-securing-api-using-jwt-part-2-c80fdc1a020a	
 	
