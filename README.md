@@ -131,7 +131,15 @@ func (uc *userController) GetUsers(c Context) error {
 ***Link***
 
 http://localhost:1323/swagger/index.html 
+	
+***Authorize***
 
+To create an auth controller which take username and password as parameters and send a token as response  
+With the token, we put it http request header like this : Bearer {token}  
+In swagger, where is the controller that you want protected Add => // @Security Bearer  
+and in the main => // @securityDefinitions.apikey Bearer  
+After run 'swag init' command  
+	
 **Clean Architecture**
 
 https://manakuro.medium.com/clean-architecture-with-go-bce409427d31
