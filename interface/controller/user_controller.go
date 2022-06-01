@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
-"fmt"
 	"training/goproject/domain/model"
 	"training/goproject/usecase/interactor"
 )
@@ -27,8 +27,9 @@ func NewUserController(us interactor.UserInteractor) UserController {
 // @Tags id
 // @Accept  json
 // @Produce  json
+// @Security Bearer
 // @Success 200 
-// @Router /users [get]
+// @Router /restricted/users [get]
 func (uc *userController) GetUsers(c Context) error {
 	fmt.Println("Endpoint Hit: GetUsers")
 	var u []*model.User
