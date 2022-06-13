@@ -6,24 +6,41 @@ import (
 	"log"
 	"training/goproject/config"
 	"training/goproject/domain/model"
-	"training/goproject/infrastructure/db/sqlc"
+	db "training/goproject/infrastructure/db/sqlc"
 )
 
 type userRepository struct {
 	db *sql.DB
 }
 
-
 type UserRepository interface {
 	FindAll() ([]*model.User, error)
+	CreateUser(*model.User) (*model.User, error)
 }
 
 func NewUserRepository(db *sql.DB) UserRepository {
 	return &userRepository{db}
 }
 
+func (ur *userRepository) CreateUser(u *model.User) (*model.User, error) {
+	config.ReadConfig()
+	conn := db.OpenDB()
+	queries := db.New(conn)
+
+	//TODO Verifier doublon
+
+	dbuser := db.User{ID: u.Id, Name: u.Name, Firstname: u.Firstname, Age: u.Age, Password: u.Password}
+	err := queries.CreateUser(context.Background(), dbuser)
+
+	if err != nil {
+		log.Println("Create User error:", err.Error())
+	}
+
+	return u, err
+}
+
 func (ur *userRepository) FindAll() ([]*model.User, error) {
-//TODO A REVOIR (automapper + db)
+	//TODO A REVOIR (automapper + db)
 	config.ReadConfig()
 	conn := db.OpenDB()
 	queries := db.New(conn)
@@ -36,10 +53,8 @@ func (ur *userRepository) FindAll() ([]*model.User, error) {
 
 	contractModels := make([]*model.User, len(users))
 	for i, v := range users {
-		contractModels[i] = &model.User{Id: v.ID, Name: v.Name, Firstname: v.Name, Age: v.Age}
+		contractModels[i] = &model.User{Id: v.ID, Name: v.Name, Firstname: v.Firstname, Age: v.Age}
 	}
 
 	return contractModels, err
 }
-
-

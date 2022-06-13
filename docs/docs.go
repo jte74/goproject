@@ -44,6 +44,42 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
+                            "$ref": "#/definitions/model.Auth"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/restricted/create-user": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Create User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "id"
+                ],
+                "summary": "Return Users",
+                "parameters": [
+                    {
+                        "description": "login user",
+                        "name": "users",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
                             "$ref": "#/definitions/model.User"
                         }
                     }
@@ -82,6 +118,19 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.Auth": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name\nin: string",
+                    "type": "string"
+                },
+                "password": {
+                    "description": "Password\nin: string",
+                    "type": "string"
+                }
+            }
+        },
         "model.User": {
             "type": "object",
             "properties": {
@@ -89,7 +138,7 @@ const docTemplate = `{
                     "description": "Age\nin: int32",
                     "type": "integer"
                 },
-                "date_created": {
+                "datecreated": {
                     "description": "DateCreated\nin: date",
                     "type": "string"
                 },

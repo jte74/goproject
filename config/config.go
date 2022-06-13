@@ -10,12 +10,12 @@ import (
 )
 
 type config struct {
-	Database struct{
-		User                 string
-		Password             string
-		Addr                 string
-		DBName               string
-		SslModel			 string
+	Database struct {
+		User     string
+		Password string
+		Addr     string
+		DBName   string
+		SslModel string
 	}
 }
 
@@ -26,9 +26,8 @@ func ReadConfig() {
 
 	viper.SetConfigName("config")
 	viper.SetConfigType("yml")
-	viper.AddConfigPath("C:/Users/OWTPF3EZC3A/Training/Golang/goProject/config")
+	viper.AddConfigPath("C:/Users/OWTPF3EZC3A/Projects/Training/Go/goProject/config")
 	viper.AutomaticEnv()
-
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println(err)
 		log.Fatalln(err)

@@ -1,5 +1,18 @@
 basePath: /
 definitions:
+  model.Auth:
+    properties:
+      name:
+        description: |-
+          Name
+          in: string
+        type: string
+      password:
+        description: |-
+          Password
+          in: string
+        type: string
+    type: object
   model.User:
     properties:
       age:
@@ -7,7 +20,7 @@ definitions:
           Age
           in: int32
         type: integer
-      date_created:
+      datecreated:
         description: |-
           DateCreated
           in: date
@@ -62,7 +75,7 @@ paths:
         name: users
         required: true
         schema:
-          $ref: '#/definitions/model.User'
+          $ref: '#/definitions/model.Auth'
       produces:
       - application/json
       responses:
@@ -71,6 +84,28 @@ paths:
       summary: login
       tags:
       - login
+  /restricted/create-user:
+    post:
+      consumes:
+      - application/json
+      description: Create User
+      parameters:
+      - description: login user
+        in: body
+        name: users
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      security:
+      - Bearer: []
+      summary: Return Users
+      tags:
+      - id
   /restricted/users:
     get:
       consumes:

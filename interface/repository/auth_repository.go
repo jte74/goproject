@@ -1,13 +1,16 @@
 package repository
 
 import (
-
-	"time"
-	"github.com/dgrijalva/jwt-go"
-	"training/goproject/domain/model"
-	"training/goproject/utils"
-	"github.com/labstack/echo/v4"
+	"context"
 	"database/sql"
+	"log"
+	"time"
+	"training/goproject/domain/model"
+	db "training/goproject/infrastructure/db/sqlc"
+	"training/goproject/utils"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/labstack/echo/v4"
 )
 
 type authRepository struct {
@@ -15,14 +18,14 @@ type authRepository struct {
 }
 
 type AuthRepository interface {
-	Auth(u *model.User) (*jwt.Token, error)
+	Auth(u *model.Auth) (*jwt.Token, error)
 }
 
 func NewAuthRepository(db *sql.DB) AuthRepository {
 	return &authRepository{db}
 }
 
-func (ur *authRepository) Auth(u *model.User) (*jwt.Token, error) {
+func (ur *authRepository) Auth(u *model.Auth) (*jwt.Token, error) {
 
 	claims := &utils.JwtCustomClaims{
 		Name:  "",
@@ -35,12 +38,21 @@ func (ur *authRepository) Auth(u *model.User) (*jwt.Token, error) {
 
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-
 	//TODO TO put in config file or get in database !
-	if u.Name != "pieter" || u.Password != "claerhout" {
+	// if u.Name != "pieter" || u.Password != "claerhout" {
+	// 	return t, echo.ErrUnauthorized
+	// }
+
+	conn := db.OpenDB()
+	queries := db.New(conn)
+
+	user, err := queries.GetUserWithName(context.Background(), u.Name)
+
+	if u.Password != user.Password {
+		log.Println(err.Error())
 		return t, echo.ErrUnauthorized
 	}
-	
+
 	//TODO add more claims !
 	claims = &utils.JwtCustomClaims{
 		Name:  "Pieter Claerhout",
