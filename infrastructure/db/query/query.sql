@@ -3,7 +3,7 @@ SELECT * FROM users
 WHERE id = $1 LIMIT 1;
 
 -- name: ListUsers :many
-SELECT * FROM users
+SELECT * FROM Users
 ORDER BY name;
 
 -- name: CreateUser :exec

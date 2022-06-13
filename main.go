@@ -3,14 +3,14 @@ package main
 import (
 	"log"
 	"training/goproject/config"
-	"training/goproject/infrastructure/db/sqlc"
+	_ "training/goproject/docs"
+	db "training/goproject/infrastructure/db/sqlc"
 	"training/goproject/infrastructure/router"
 	"training/goproject/registry"
+
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
-	_ "training/goproject/docs"
 )
-
 
 // @title Article API
 // @version 1.0
