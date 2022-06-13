@@ -2,9 +2,9 @@ package interactor
 
 import (
 	"training/goproject/domain/model"
-	"training/goproject/utils"
 	"training/goproject/usecase/presenter"
 	"training/goproject/usecase/repository"
+	"training/goproject/utils"
 )
 
 type authInteractor struct {
@@ -13,14 +13,14 @@ type authInteractor struct {
 }
 
 type AuthInteractor interface {
-	GetToken(u *model.User) (string, error)
+	GetToken(u *model.Auth) (string, error)
 }
 
 func NewAuthInteractor(r repository.AuthRepository, p presenter.AuthPresenter) AuthInteractor {
 	return &authInteractor{r, p}
 }
 
-func (us *authInteractor) GetToken(u *model.User) (string, error) {
+func (us *authInteractor) GetToken(u *model.Auth) (string, error) {
 
 	j, err := us.AuthRepository.Auth(u)
 

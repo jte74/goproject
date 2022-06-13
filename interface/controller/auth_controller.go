@@ -8,7 +8,6 @@ import (
 	"training/goproject/usecase/interactor"
 )
 
-
 type authController struct {
 	authInteractor interactor.AuthInteractor
 }
@@ -27,12 +26,12 @@ func NewAuthController(us interactor.AuthInteractor) AuthController {
 // @Tags login
 // @Accept  json
 // @Produce  json
-// @Param users body model.User true "login user"  
-// @Success 200 
+// @Param users body model.Auth true "login user"
+// @Success 200
 // @Router /auth [post]
 func (uc *authController) Auth(c Context) error {
-    fmt.Println("Endpoint Hit: Auth")
-	var params model.User
+	fmt.Println("Endpoint Hit: Auth")
+	var params model.Auth
 	if err := c.Bind(&params); !errors.Is(err, nil) {
 		return err
 	}
