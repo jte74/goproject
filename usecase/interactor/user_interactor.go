@@ -12,7 +12,8 @@ type userInteractor struct {
 }
 
 type UserInteractor interface {
-	Get(u []*model.User) ([]*model.User, error)
+	GetUsers(u []*model.User) ([]*model.User, error)
+	GetUser(id *int) (*model.User, error)
 	CreateUser(u *model.User) (*model.User, error)
 	DeleteUser(id *int) error
 }
@@ -21,8 +22,17 @@ func NewUserInteractor(r repository.UserRepository, p presenter.UserPresenter) U
 	return &userInteractor{r, p}
 }
 
-func (us *userInteractor) Get(u []*model.User) ([]*model.User, error) {
-	u, err := us.UserRepository.FindAll()
+func (us *userInteractor) GetUser(id *int) (*model.User, error) {
+	u, err := us.UserRepository.GetUser(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return us.UserPresenter.ResponseUser(u), nil
+}
+
+func (us *userInteractor) GetUsers(u []*model.User) ([]*model.User, error) {
+	u, err := us.UserRepository.GetUsers()
 	if err != nil {
 		return nil, err
 	}

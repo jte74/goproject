@@ -78,7 +78,7 @@ SELECT id, name, firstname, age, password, token, datecreated FROM users
 ORDER BY name
 `
 
-func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
+func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
 	rows, err := q.db.QueryContext(ctx, listUsers)
 	if err != nil {
 		return nil, err

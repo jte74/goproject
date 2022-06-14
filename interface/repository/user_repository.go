@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"log"
-	"training/goproject/config"
 	"training/goproject/domain/model"
 	db "training/goproject/infrastructure/db/sqlc"
 )
@@ -14,9 +13,10 @@ type userRepository struct {
 }
 
 type UserRepository interface {
-	FindAll() ([]*model.User, error)
+	GetUsers() ([]*model.User, error)
 	CreateUser(*model.User) (*model.User, error)
 	DeleteUser(*int) error
+	GetUser(id *int) (*model.User, error)
 }
 
 func NewUserRepository(db *sql.DB) UserRepository {
@@ -24,7 +24,7 @@ func NewUserRepository(db *sql.DB) UserRepository {
 }
 
 func (ur *userRepository) CreateUser(u *model.User) (*model.User, error) {
-	config.ReadConfig()
+
 	conn := db.OpenDB()
 	queries := db.New(conn)
 
@@ -40,13 +40,28 @@ func (ur *userRepository) CreateUser(u *model.User) (*model.User, error) {
 	return u, err
 }
 
-func (ur *userRepository) FindAll() ([]*model.User, error) {
-	//TODO A REVOIR (automapper + db)
-	config.ReadConfig()
+func (ur *userRepository) GetUser(id *int) (*model.User, error) {
+
 	conn := db.OpenDB()
 	queries := db.New(conn)
 
-	users, err := queries.ListUsers(context.Background())
+	user, err := queries.GetUser(context.Background(), *id)
+
+	if err != nil {
+		log.Fatal("User error:", err)
+	}
+
+	contractModels := &model.User{Id: user.ID, Name: user.Name, Firstname: user.Firstname, Age: user.Age}
+
+	return contractModels, err
+}
+
+func (ur *userRepository) GetUsers() ([]*model.User, error) {
+
+	conn := db.OpenDB()
+	queries := db.New(conn)
+
+	users, err := queries.GetUsers(context.Background())
 
 	if err != nil {
 		log.Fatal("ListUsers error:", err)
@@ -61,15 +76,11 @@ func (ur *userRepository) FindAll() ([]*model.User, error) {
 }
 
 func (ur *userRepository) DeleteUser(id *int) error {
-	//TODO A REVOIR (automapper + db)
-	config.ReadConfig()
+
 	conn := db.OpenDB()
 	queries := db.New(conn)
 
-	var idtest int
-	idtest = *id
-
-	err := queries.DeleteUser(context.Background(), idtest)
+	err := queries.DeleteUser(context.Background(), *id)
 
 	if err != nil {
 		log.Fatal("DeleteUsers error:", err)
