@@ -103,7 +103,7 @@ paths:
           description: ""
       security:
       - Bearer: []
-      summary: Return Users
+      summary: Return name created
       tags:
       - User
   /restricted/delete-user/{id}:

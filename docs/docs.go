@@ -72,7 +72,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "Return Users",
+                "summary": "Return name created",
                 "parameters": [
                     {
                         "description": "login user",

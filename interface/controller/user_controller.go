@@ -69,7 +69,7 @@ func (uc *userController) GetUser(c Context) error {
 }
 
 // Create Users godoc
-// @Summary Return Users
+// @Summary Return name created
 // @Description Create User
 // @Tags User
 // @Accept  json
