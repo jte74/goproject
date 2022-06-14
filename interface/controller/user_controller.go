@@ -3,6 +3,7 @@ package controller
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"training/goproject/domain/model"
@@ -15,6 +16,7 @@ type userController struct {
 
 type UserController interface {
 	GetUsers(c Context) error
+	GetUser(c Context) error
 	CreateUser(c Context) error
 	DeleteUser(c Context) error
 	Home(c Context) error
@@ -27,7 +29,7 @@ func NewUserController(us interactor.UserInteractor) UserController {
 // Return All Users godoc
 // @Summary Return All Users
 // @Description Return All Users
-// @Tags id
+// @Tags User
 // @Accept  json
 // @Produce  json
 // @Security Bearer
@@ -37,8 +39,30 @@ func (uc *userController) GetUsers(c Context) error {
 	fmt.Println("Endpoint Hit: GetUsers")
 	var u []*model.User
 
-	u, err := uc.userInteractor.Get(u)
+	u, err := uc.userInteractor.GetUsers(u)
 	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, u)
+}
+
+// Return User godoc
+// @Summary Return User
+// @Description Return User
+// @Tags User
+// @Accept  json
+// @Produce  json
+// @Security Bearer
+// @Param id path integer true "id"
+// @Success 200
+// @Router /restricted/user-id/{id} [get]
+func (uc *userController) GetUser(c Context) error {
+	fmt.Println("Endpoint Hit: GetUser")
+
+	id, iderr := strconv.Atoi(c.Param("id"))
+	u, err := uc.userInteractor.GetUser(&id)
+
+	if err != nil || iderr != nil {
 		return err
 	}
 	return c.JSON(http.StatusOK, u)
@@ -47,7 +71,7 @@ func (uc *userController) GetUsers(c Context) error {
 // Create Users godoc
 // @Summary Return Users
 // @Description Create User
-// @Tags id
+// @Tags User
 // @Accept  json
 // @Produce  json
 // @Security Bearer
@@ -71,7 +95,7 @@ func (uc *userController) CreateUser(c Context) error {
 // Delete Users godoc
 // @Summary Delete Users
 // @Description Delete User
-// @Tags id
+// @Tags User
 // @Accept  json
 // @Produce  json
 // @Security Bearer
@@ -81,7 +105,9 @@ func (uc *userController) CreateUser(c Context) error {
 func (uc *userController) DeleteUser(c Context) error {
 	fmt.Println("Endpoint Hit: DeleteUser")
 
-	id, iderr := strconv.Atoi(c.QueryParam("id"))
+	id, iderr := strconv.Atoi(c.Param("id"))
+
+	log.Println("TESTSETSTSETESTSE1566id", id)
 
 	err := uc.userInteractor.DeleteUser(&id)
 

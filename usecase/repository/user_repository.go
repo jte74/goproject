@@ -3,7 +3,8 @@ package repository
 import "training/goproject/domain/model"
 
 type UserRepository interface {
-	FindAll() ([]*model.User, error)
+	GetUsers() ([]*model.User, error)
+	GetUser(id *int) (*model.User, error)
 	CreateUser(u *model.User) (*model.User, error)
 	DeleteUser(id *int) error
 }

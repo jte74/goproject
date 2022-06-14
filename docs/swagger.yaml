@@ -105,7 +105,7 @@ paths:
       - Bearer: []
       summary: Return Users
       tags:
-      - id
+      - User
   /restricted/delete-user/{id}:
     delete:
       consumes:
@@ -126,7 +126,28 @@ paths:
       - Bearer: []
       summary: Delete Users
       tags:
-      - id
+      - User
+  /restricted/user-id/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Return User
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      security:
+      - Bearer: []
+      summary: Return User
+      tags:
+      - User
   /restricted/users:
     get:
       consumes:
@@ -141,7 +162,7 @@ paths:
       - Bearer: []
       summary: Return All Users
       tags:
-      - id
+      - User
 securityDefinitions:
   Bearer:
     in: header

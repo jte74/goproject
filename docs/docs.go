@@ -70,7 +70,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "id"
+                    "User"
                 ],
                 "summary": "Return Users",
                 "parameters": [
@@ -106,9 +106,43 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "id"
+                    "User"
                 ],
                 "summary": "Delete Users",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/restricted/user-id/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "Return User",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Return User",
                 "parameters": [
                     {
                         "type": "integer",
@@ -140,7 +174,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "id"
+                    "User"
                 ],
                 "summary": "Return All Users",
                 "responses": {
