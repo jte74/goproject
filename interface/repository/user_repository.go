@@ -12,6 +12,10 @@ type userRepository struct {
 	db *sql.DB
 }
 
+func DbInitialize() *db.Queries {
+	return db.New(db.OpenDB())
+}
+
 type UserRepository interface {
 	GetUsers() ([]*model.User, error)
 	CreateUser(*model.User) (*model.User, error)
@@ -25,13 +29,9 @@ func NewUserRepository(db *sql.DB) UserRepository {
 
 func (ur *userRepository) CreateUser(u *model.User) (*model.User, error) {
 
-	conn := db.OpenDB()
-	queries := db.New(conn)
-
 	//TODO Verifier doublon
-
 	dbuser := db.User{ID: u.Id, Name: u.Name, Firstname: u.Firstname, Age: u.Age, Password: u.Password}
-	err := queries.CreateUser(context.Background(), dbuser)
+	err := DbInitialize().CreateUser(context.Background(), dbuser)
 
 	if err != nil {
 		log.Println("Create User error:", err.Error())
@@ -42,10 +42,7 @@ func (ur *userRepository) CreateUser(u *model.User) (*model.User, error) {
 
 func (ur *userRepository) GetUser(id *int) (*model.User, error) {
 
-	conn := db.OpenDB()
-	queries := db.New(conn)
-
-	user, err := queries.GetUser(context.Background(), *id)
+	user, err := DbInitialize().GetUser(context.Background(), *id)
 
 	if err != nil {
 		log.Fatal("User error:", err)
@@ -58,10 +55,7 @@ func (ur *userRepository) GetUser(id *int) (*model.User, error) {
 
 func (ur *userRepository) GetUsers() ([]*model.User, error) {
 
-	conn := db.OpenDB()
-	queries := db.New(conn)
-
-	users, err := queries.GetUsers(context.Background())
+	users, err := DbInitialize().GetUsers(context.Background())
 
 	if err != nil {
 		log.Fatal("ListUsers error:", err)
@@ -77,10 +71,7 @@ func (ur *userRepository) GetUsers() ([]*model.User, error) {
 
 func (ur *userRepository) DeleteUser(id *int) error {
 
-	conn := db.OpenDB()
-	queries := db.New(conn)
-
-	err := queries.DeleteUser(context.Background(), *id)
+	err := DbInitialize().DeleteUser(context.Background(), *id)
 
 	if err != nil {
 		log.Fatal("DeleteUsers error:", err)

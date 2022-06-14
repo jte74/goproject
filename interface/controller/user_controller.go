@@ -37,9 +37,8 @@ func NewUserController(us interactor.UserInteractor) UserController {
 // @Router /restricted/users [get]
 func (uc *userController) GetUsers(c Context) error {
 	fmt.Println("Endpoint Hit: GetUsers")
-	var u []*model.User
 
-	u, err := uc.userInteractor.GetUsers(u)
+	u, err := uc.userInteractor.GetUsers()
 	if err != nil {
 		return err
 	}
