@@ -106,6 +106,27 @@ paths:
       summary: Return Users
       tags:
       - id
+  /restricted/delete-user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete User
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      security:
+      - Bearer: []
+      summary: Delete Users
+      tags:
+      - id
   /restricted/users:
     get:
       consumes:

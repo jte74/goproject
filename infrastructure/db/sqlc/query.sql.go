@@ -28,7 +28,7 @@ DELETE FROM users
 WHERE id = $1
 `
 
-func (q *Queries) DeleteUser(ctx context.Context, id int32) error {
+func (q *Queries) DeleteUser(ctx context.Context, id int) error {
 	_, err := q.db.ExecContext(ctx, deleteUser, id)
 	return err
 }
@@ -38,7 +38,7 @@ SELECT id, name, firstname, age, password, token, datecreated FROM users
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetUser(ctx context.Context, id int32) (User, error) {
+func (q *Queries) GetUser(ctx context.Context, id int) (User, error) {
 	row := q.db.QueryRowContext(ctx, getUser, id)
 	var i User
 	err := row.Scan(
@@ -72,7 +72,6 @@ func (q *Queries) GetUserWithName(ctx context.Context, name string) (User, error
 	)
 	return i, err
 }
-
 
 const listUsers = `-- name: ListUsers :many
 SELECT id, name, firstname, age, password, token, datecreated FROM users

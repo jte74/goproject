@@ -29,6 +29,7 @@ func NewRouter(e *echo.Echo, c controller.AppController) *echo.Echo {
 	e.POST("/auth", func(context echo.Context) error { return c.Auth.Auth(context) })
 	r.GET("/users", func(context echo.Context) error { return c.User.GetUsers(context) })
 	r.POST("/create-user", func(context echo.Context) error { return c.User.CreateUser(context) })
+	r.DELETE("/delete-user", func(context echo.Context) error { return c.User.DeleteUser(context) })
 
 	return e
 }
