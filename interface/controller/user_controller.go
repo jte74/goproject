@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 	"training/goproject/domain/model"
 	"training/goproject/usecase/interactor"
 )
@@ -15,6 +16,7 @@ type userController struct {
 type UserController interface {
 	GetUsers(c Context) error
 	CreateUser(c Context) error
+	DeleteUser(c Context) error
 	Home(c Context) error
 }
 
@@ -64,6 +66,29 @@ func (uc *userController) CreateUser(c Context) error {
 		return err
 	}
 	return c.JSON(http.StatusOK, u.Name)
+}
+
+// Delete Users godoc
+// @Summary Delete Users
+// @Description Delete User
+// @Tags id
+// @Accept  json
+// @Produce  json
+// @Security Bearer
+// @Param id path integer true "id"
+// @Success 200
+// @Router /restricted/delete-user/{id} [delete]
+func (uc *userController) DeleteUser(c Context) error {
+	fmt.Println("Endpoint Hit: DeleteUser")
+
+	id, iderr := strconv.Atoi(c.QueryParam("id"))
+
+	err := uc.userInteractor.DeleteUser(&id)
+
+	if err != nil || iderr != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, nil)
 }
 
 func (uc *userController) Home(c Context) error {

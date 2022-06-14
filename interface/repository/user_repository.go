@@ -16,6 +16,7 @@ type userRepository struct {
 type UserRepository interface {
 	FindAll() ([]*model.User, error)
 	CreateUser(*model.User) (*model.User, error)
+	DeleteUser(*int) error
 }
 
 func NewUserRepository(db *sql.DB) UserRepository {
@@ -57,4 +58,22 @@ func (ur *userRepository) FindAll() ([]*model.User, error) {
 	}
 
 	return contractModels, err
+}
+
+func (ur *userRepository) DeleteUser(id *int) error {
+	//TODO A REVOIR (automapper + db)
+	config.ReadConfig()
+	conn := db.OpenDB()
+	queries := db.New(conn)
+
+	var idtest int
+	idtest = *id
+
+	err := queries.DeleteUser(context.Background(), idtest)
+
+	if err != nil {
+		log.Fatal("DeleteUsers error:", err)
+	}
+
+	return err
 }
