@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+	"runtime"
 
 	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/viper"
@@ -26,7 +28,11 @@ func ReadConfig() {
 
 	viper.SetConfigName("config")
 	viper.SetConfigType("yml")
-	viper.AddConfigPath("C:/Users/OWTPF3EZC3A/Projects/Training/Go/goProject/config")
+	println()
+
+	path := RootDir()
+	// viper.AddConfigPath("C:/Users/OWTPF3EZC3A/Projects/Training/Go/goProject/config")
+	viper.AddConfigPath(path)
 	viper.AutomaticEnv()
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println(err)
@@ -39,4 +45,10 @@ func ReadConfig() {
 	}
 
 	spew.Dump(C)
+}
+
+func RootDir() string {
+	_, b, _, _ := runtime.Caller(0)
+	basepath := filepath.Dir(b)
+	return basepath
 }
