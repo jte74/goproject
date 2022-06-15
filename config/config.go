@@ -17,7 +17,11 @@ type config struct {
 		Password string
 		Addr     string
 		DBName   string
-		SslModel string
+		Sslmode  string
+	}
+
+	App struct {
+		Addr string
 	}
 }
 
