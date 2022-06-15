@@ -12,7 +12,7 @@ type userInteractor struct {
 }
 
 type UserInteractor interface {
-	GetUsers(u []*model.User) ([]*model.User, error)
+	GetUsers() ([]*model.User, error)
 	GetUser(id *int) (*model.User, error)
 	CreateUser(u *model.User) (*model.User, error)
 	DeleteUser(id *int) (string, error)
@@ -31,7 +31,7 @@ func (us *userInteractor) GetUser(id *int) (*model.User, error) {
 	return us.UserPresenter.ResponseUser(u), nil
 }
 
-func (us *userInteractor) GetUsers(u []*model.User) ([]*model.User, error) {
+func (us *userInteractor) GetUsers() ([]*model.User, error) {
 	u, err := us.UserRepository.GetUsers()
 	if err != nil {
 		return nil, err
