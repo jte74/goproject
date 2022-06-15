@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"fmt"
 	"log"
 	"training/goproject/domain/model"
 	db "training/goproject/infrastructure/db/sqlc"
@@ -15,7 +16,7 @@ type userRepository struct {
 type UserRepository interface {
 	GetUsers() ([]*model.User, error)
 	CreateUser(*model.User) (*model.User, error)
-	DeleteUser(*int) error
+	DeleteUser(*int) (string, error)
 	GetUser(id *int) (*model.User, error)
 }
 
@@ -64,7 +65,7 @@ func (ur *userRepository) GetUsers() ([]*model.User, error) {
 	users, err := queries.GetUsers(context.Background())
 
 	if err != nil {
-		log.Fatal("ListUsers error:", err)
+		log.Fatal("GetUsers error:", err)
 	}
 
 	contractModels := make([]*model.User, len(users))
@@ -75,7 +76,15 @@ func (ur *userRepository) GetUsers() ([]*model.User, error) {
 	return contractModels, err
 }
 
-func (ur *userRepository) DeleteUser(id *int) error {
+func (ur *userRepository) DeleteUser(id *int) (string, error) {
+
+	user, errorUser := DbInitialize().GetUser(context.Background(), *id)
+
+	if errorUser != nil {
+		log.Fatal("DeleteUsers error:", errorUser)
+	}
+
+	name := fmt.Sprintf("user %s deleted", user.Name)
 
 	conn := db.OpenDB()
 	queries := db.New(conn)
@@ -86,5 +95,5 @@ func (ur *userRepository) DeleteUser(id *int) error {
 		log.Fatal("DeleteUsers error:", err)
 	}
 
-	return err
+	return name, nil
 }

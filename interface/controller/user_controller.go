@@ -3,7 +3,6 @@ package controller
 import (
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"training/goproject/domain/model"
@@ -106,15 +105,12 @@ func (uc *userController) DeleteUser(c Context) error {
 	fmt.Println("Endpoint Hit: DeleteUser")
 
 	id, iderr := strconv.Atoi(c.Param("id"))
-
-	log.Println("TESTSETSTSETESTSE1566id", id)
-
-	err := uc.userInteractor.DeleteUser(&id)
+	resp, err := uc.userInteractor.DeleteUser(&id)
 
 	if err != nil || iderr != nil {
 		return err
 	}
-	return c.JSON(http.StatusOK, nil)
+	return c.JSON(http.StatusOK, resp)
 }
 
 func (uc *userController) Home(c Context) error {

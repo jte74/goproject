@@ -26,8 +26,8 @@ func New(db DBTX) *Queries {
 
 func OpenDB() *sql.DB {
 	DBPG := "postgres"
-	pg_con_string := fmt.Sprintf("user=%s dbname=%s password=%s sslmode=disable",
-	config.C.Database.User, config.C.Database.DBName, config.C.Database.Password)
+	pg_con_string := fmt.Sprintf("user=%s dbname=%s password=%s sslmode=%s",
+	config.C.Database.User, config.C.Database.DBName, config.C.Database.Password, config.C.Database.Sslmode)
 	db, err := sql.Open(DBPG, pg_con_string)
 
 	if err != nil {

@@ -34,13 +34,7 @@ func main() {
 	e := echo.New()
 	e = router.NewRouter(e, r.NewAppController())
 
-	if err := e.Start("localhost:8081"); err != nil {
+	if err := e.Start(config.C.App.Addr); err != nil {
 		log.Fatalln(err)
 	}
-
-	// err = queries.DeleteUser(context.Background(), insertedUser.Id)
-	// if err != nil {
-	// 	log.Fatal("DeleteUser error:", err)
-	// }
-	// config.ReadConfig()
 }

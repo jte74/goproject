@@ -2,8 +2,8 @@ package model
 
 type User struct {
 	// Id
-	// in: int32
-	Id int32 `json:"id,omitempty"`
+	// in: int
+	Id int `json:"id,omitempty"`
 	// Name
 	// in: string
 	Name string `json:"name,omitempty"`

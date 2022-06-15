@@ -9,7 +9,7 @@ import (
 )
 
 type User struct {
-	ID          int32
+	ID          int
 	Name        string
 	Firstname   string
 	Age         int32
