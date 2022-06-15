@@ -15,7 +15,7 @@ type UserInteractor interface {
 	GetUsers(u []*model.User) ([]*model.User, error)
 	GetUser(id *int) (*model.User, error)
 	CreateUser(u *model.User) (*model.User, error)
-	DeleteUser(id *int) error
+	DeleteUser(id *int) (string, error)
 }
 
 func NewUserInteractor(r repository.UserRepository, p presenter.UserPresenter) UserInteractor {
@@ -51,13 +51,13 @@ func (us *userInteractor) CreateUser(u *model.User) (*model.User, error) {
 	return us.UserPresenter.ResponseCreateUsers(u), nil
 }
 
-func (us *userInteractor) DeleteUser(id *int) error {
+func (us *userInteractor) DeleteUser(id *int) (string, error) {
 
-	err := us.UserRepository.DeleteUser(id)
+	name, err := us.UserRepository.DeleteUser(id)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return err
+	return name, err
 }
