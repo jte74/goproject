@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  app:
+    build: 
+      dockerfile: dockerfile
+      context: .
+      target: dev
+    volumes:
+    - .:/opt/app/api
+    environment:
+      API_SERVER_ADDR: ":8081"
+      DATABASE_URL: postgres://local-dev@db/api?sslmode=disable
+    ports:
+    - "8081:8081"
+    links:
+    - go-postgres
+    
+  go-postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "EmilieMarine86"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "gotraining"
+    ports:
+      - "5432:5432"
+    volumes:
+      - /db/sqlc/query.sql.go:/var/lib/postgresql/data
+
+  migrate: &basemigrate
+    profiles: ["tools"]
+    image: migrate/migrate
+    entrypoint: "migrate -database postgresql://local-dev@db/api?sslmode=disable -path /tmp/migrations"
+    command: up
+    links:
+      - db
+    volumes:
+      - ./migrations:/tmp/migrations
+  
+  create-migration:
+    <<: *basemigrate
+    entrypoint: migrate create -dir /tmp/migrations -ext sql
+    command: ""
+
