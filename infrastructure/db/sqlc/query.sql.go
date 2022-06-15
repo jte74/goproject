@@ -15,12 +15,14 @@ INSERT INTO users (
 ) VALUES (
   $1, $2, $3, $4, NOW()
 )
-RETURNING id, name, firstname, age, password, token, datecreated
+RETURNING id
 `
 
-func (q *Queries) CreateUser(ctx context.Context, arg User) error {
-	_, err := q.db.ExecContext(ctx, createUser, arg.Name, arg.Firstname, arg.Age, arg.Password)
-	return err
+func (q *Queries) CreateUser(ctx context.Context, arg User) ( int, error) {
+	var id int
+	response := q.db.QueryRowContext(ctx, createUser, arg.Name, arg.Firstname, arg.Age, arg.Password).Scan(&id)
+
+	return id, response
 }
 
 const deleteUser = `-- name: DeleteUser :exec

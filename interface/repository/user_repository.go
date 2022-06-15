@@ -19,7 +19,7 @@ func DbInitialize() *db.Queries {
 
 type UserRepository interface {
 	GetUsers() ([]*model.User, error)
-	CreateUser(*model.User) (*model.User, error)
+	CreateUser(*model.User) (int, error)
 	DeleteUser(*int) (string, error)
 	GetUser(id *int) (*model.User, error)
 }
@@ -28,17 +28,18 @@ func NewUserRepository(db *sql.DB) UserRepository {
 	return &userRepository{db}
 }
 
-func (ur *userRepository) CreateUser(u *model.User) (*model.User, error) {
+func (ur *userRepository) CreateUser(u *model.User) (int, error) {
 
 	//TODO Verifier doublon
-	dbuser := db.User{ID: u.Id, Name: u.Name, Firstname: u.Firstname, Age: u.Age, Password: u.Password}
-	err := DbInitialize().CreateUser(context.Background(), dbuser)
-
+	//TODO Ajouter log
+	dbuser := db.User{Name: u.Name, Firstname: u.Firstname, Age: u.Age, Password: u.Password}
+	id, err := DbInitialize().CreateUser(context.Background(), dbuser)
+	println(id)
 	if err != nil {
 		log.Println("Create User error:", err.Error())
 	}
 
-	return u, err
+	return id, err
 }
 
 func (ur *userRepository) GetUser(id *int) (*model.User, error) {

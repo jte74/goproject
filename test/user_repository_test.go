@@ -93,8 +93,9 @@ func Test_DeleteUser(t *testing.T) {
 		Firstname: "DeleteTest",
 	}
 
-	userCreate, err := r.CreateUser(&user)
-	_, errorDelete := r.DeleteUser(&userCreate.Id)
+	id, err := r.CreateUser(&user)
+	userGet, err := r.GetUser(&id)
+	_, errorDelete := r.DeleteUser(&userGet.Id)
 
 	if errorDelete != nil {
 		t.Errorf(err.Error())

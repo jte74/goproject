@@ -87,7 +87,7 @@ func (uc *userController) CreateUser(c Context) error {
 	if err != nil {
 		return err
 	}
-	return c.JSON(http.StatusOK, u.Name)
+	return c.JSON(http.StatusOK, u)
 }
 
 // Delete Users godoc
